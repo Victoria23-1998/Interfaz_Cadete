@@ -10,6 +10,11 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class TravelService {
 
   constructor(private http:HttpClient) { }
+  
+  getTravels(statusTravel:number):Observable<TravelResponse[]>{
+    return this.http.get<TravelResponse[]>(`/api/Travel/1/${statusTravel}`)
+  }
+
  //Trae viajes disponibles
   getTravel1():Observable<TravelResponse[]>{
     return this.http.get<TravelResponse[]>("/api/Travel/1/1")

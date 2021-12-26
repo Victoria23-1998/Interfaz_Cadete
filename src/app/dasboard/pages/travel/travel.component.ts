@@ -21,44 +21,51 @@ export class TravelComponent implements OnInit {
   opcionSeleccionada: string  = '1';
   seleccion: string        = '';
   viajesEmpezados:TravelResponse[]=[]
-  ViajeLocalS:TravelResponse[]=[]
+  allTravels:TravelResponse[]=[]
 
   ngOnInit(): void {
-    this.getTravels1()
-    this.getTravels2()
+    this.getTravels(1,'disponibles')
+    this.getTravels(2,'disponibles')
    
    //traer el id del cadete
     this.local = JSON.parse(localStorage.getItem('Usuario')|| '')
     this.idCadete= this.local.id
 
   }
- //traer viajes disponibles estado 1
-  getTravels1(){
-    this.travelService.getTravel1().subscribe(data => {
 
-      data.forEach(element => {
-        this.viajesDisponibles.push(element)
+  //traer viajes
+  getTravels(status: number, tipoDeViaje: string) {
+    this.travelService.getTravels(status).subscribe(data => {
+
+      console.log(data)
+      data.forEach(async element => {
+        this.allTravels.push(element)
+
+        if (tipoDeViaje === 'disponibles') {
+          this.viajesDisponibles = this.allTravels
+          
+        }else if (tipoDeViaje === 'en curso' || 'asignados') {
+          //buscar los viajes del cadete
+          let response = await data.filter(el => el.travelEquipmentDTOs[el.travelEquipmentDTOs.length - 1].cadete.id == this.idCadete)
+          
+          response.forEach(travel => {
+
+            let index = tipoDeViaje === 'en curso' ?this.viajesEmpezados.findIndex(elm => elm.id == travel.id):
+            this.acceptedTravel.findIndex(elm => elm.id == travel.id)
+            if (index === -1) {
+              tipoDeViaje === 'en curso' ? this.viajesEmpezados.push(travel) : this.acceptedTravel.push(travel); this.ordenarArray(this.acceptedTravel)
+            }
+          })
+        }
+        
       })
-
-    }, (error) => {
-      console.log(error.error)
-    });
-  }
- //traer viajes disponibles estado 2
-  getTravels2(){
-    this.travelService.getTravel2().subscribe(data => {
-
-      data.forEach(element => {
-        this.viajesDisponibles.push(element)
-      });
+      
       this.loader = false
-
     }, (error) => {
       console.log(error.error)
     });
   }
- 
- 
+
  // Código del select
 
   capturar() {
@@ -68,26 +75,25 @@ export class TravelComponent implements OnInit {
 
      this.loader = true
      this.viajesDisponibles = []
-     this.TravelAccepted1()
-     this.TravelAccepted2()
+     this.getTravels(2,'asignados')
+     this.getTravels(6,'asignados')
 
    } else if (this.seleccion === '1') {
      this.loader = true
      this.acceptedTravel = []
-
-     this.getTravels1()
-     this.getTravels2()
+     this.getTravels(1,'disponibles')
+     this.getTravels(5,'disponibles')
    } else if (this.seleccion === '3') {
      this.loader = true
-     this.viajeEnCurso1()
-     this.viajeEnCurso2()
-    console.log(this.viajesEmpezados)
+     this.getTravels(3,'en curso')
+     this.getTravels(7,'en curso')
+   
    }
 
 }
 
 //Traer los viajes en curso estado 3
- viajeEnCurso1(){
+ /*viajeEnCurso1(){
 
      this.travelService.viajesCurso1().subscribe(data => {
 
@@ -104,27 +110,13 @@ export class TravelComponent implements OnInit {
    }, (error) => {
      console.log(error.error)
    })
- }
+ }*/
 //Traer los viajes en curso estado 7
- viajeEnCurso2(){
-   this.travelService.viajesCurso2().subscribe(data => {
-
-     let response = data.filter(el => el.travelEquipmentDTOs[el.travelEquipmentDTOs.length - 1].cadete.id == this.idCadete)
-     response.forEach(travel => {
-       let index = this.viajesEmpezados.findIndex(elm => elm.id == travel.id);
-       if (index === -1) {
-         this.viajesEmpezados.push(travel)
-       }
-     })
-     this.loader = false
-   }, (error) => {
-     console.log(error.error)
-   })
-}
+ 
 
   // traer viajes aceptados por el cadete estado 2
  
-  TravelAccepted1(){
+  /*TravelAccepted1(){
       this.travelService.getTravelAccepted1().subscribe(data => {
       let response = data.filter(el => el.travelEquipmentDTOs[el.travelEquipmentDTOs.length - 1].cadete.id == this.idCadete)
 
@@ -139,12 +131,12 @@ export class TravelComponent implements OnInit {
     }, (error) => {
       console.log(error.error)
     });
-  }
+  }*/
 
   
 
    // traer viajes aceptados por el cadete estado 6
-  TravelAccepted2(){
+ /* TravelAccepted2(){
     this.travelService.getTravelAccepted2().subscribe(data => {
 
       let response = data.filter(el => el.travelEquipmentDTOs[el.travelEquipmentDTOs.length - 1].cadete.id == this.idCadete)
@@ -165,7 +157,7 @@ export class TravelComponent implements OnInit {
       console.log(error.error)
     });
 
-   }
+   }*/
  
 
   //ordenar array por fecha
