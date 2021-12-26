@@ -1,0 +1,213 @@
+
+//Estilo de la card solicitar
+.content-card{
+    background-color: var(--principal-color);
+    border-radius: 10px;
+    -webkit-box-shadow: var(--webki-box);
+    box-shadow: var(--box-shadow);
+    margin-top: 20px;
+    display: flex;
+    padding: 15px 15px 15px 15px;
+    align-items: center;
+    
+    
+    p{
+        font-family: 'Open sans';
+        color: var(--text-color-parraf)
+    }
+    b{
+        color: var(--b);
+    }
+}
+section{
+    padding-left:15px ;
+    padding-right: 15px;
+   
+}
+.content-btn-img{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    img{
+        margin-top: 20px;
+        width: 40px;
+        margin-bottom: 15px;
+    }
+   
+
+}
+.content-data{
+    margin-right:50px ;
+    margin-left: 10px;
+    width: 180px;
+    color: var(--text-color-parraf)
+}
+//card aceptados
+
+.content-card2{
+    background-color: var(--principal-color);
+    border-radius: 10px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    -webkit-box-shadow: var(--webki-box);
+    box-shadow: var(--box-shadow);
+    margin-bottom: 20px;
+    
+
+}
+
+.content-data2{
+    p{
+        text-align: center;
+        color: var(--text-color-parraf)
+    }
+    b{
+        color: var(--b);
+    }
+}
+
+//estilos de viajes en curso
+.content-data3{
+    
+    p{
+        text-align: center;
+        color: var(--text-color-parraf)
+       
+    }
+}
+
+.content-btn2{
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ 
+}
+.content-card3{
+    background-color:var(--principal-color);
+    border-radius: 10px;
+    padding: 10px 10px 10px 10px;
+    margin-top: 20px;
+    -webkit-box-shadow: var(--webki-box);
+    box-shadow: var(--box-shadow);
+}
+
+section{
+   padding-bottom: 100px;
+  padding-top: 60px;
+}
+
+
+.button-soli{
+    border-radius: 15px;
+    background-color: #F0C028;
+    box-shadow: var(--box-btn);
+}
+.button-soli:focus{
+    background-color: rgb(33, 116, 40);
+}
+
+.content-btn-emp{
+display: flex;
+align-items: center;
+justify-content: center;
+}
+.empezar-viaje{
+    border-radius: 15px;
+    background-color: #F0C028;
+    box-shadow: -3px -3px 8px #fff,
+    3px 3px 5px rgb(94,104,121,0.7);
+    margin-right: 20px;
+    margin-top: 20px;
+}
+.abandonar{
+    border-radius: 15px;
+    background-color: #7C9D94;
+    box-shadow: -3px -3px 8px #fff,
+    3px 3px 5px rgb(94,104,121,0.7);
+    margin-top: 20px;
+}
+.finalizar-btn{
+    border-radius: 15px;
+    background-color: #F0C028;
+    box-shadow: -3px -3px 8px #fff,
+    3px 3px 5px rgb(94,104,121,0.7);
+    margin-right: 20px;
+    margin-top: 20px;
+}
+.mapa-btn{
+    border-radius: 15px;
+    background-color: #7C9D94;
+    box-shadow: -3px -3px 8px #fff,
+    3px 3px 5px rgb(94,104,121,0.7);
+    margin-top: 20px;
+}
+h2{
+    text-align: center;
+    color:var(--text-color-title)
+}
+
+.no-viajes-3{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 80px;
+    p{
+     text-align: center;
+     color: #F0C028;
+     font-family: 'Open sans';
+     font-weight: bold;
+     
+    }
+    
+}
+h2{
+    font-family: 'Open sans'; 
+    font-weight: bold;
+    margin-top: 30px;
+    color:var(--text-color-title)
+}
+
+@media screen and (min-width:500px) and (max-width:800px){
+    .content-card{
+        width: 380px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .content-card2{
+        width: 380px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .content-card3{
+        width: 380px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+}
+@media screen and (min-width:801px) and (max-width:1400px){
+    .content-card{
+        width: 440px;
+        margin-right: 20px;
+    }
+    .content-card2{
+        width: 440px;
+      
+    }
+    .content-card3{
+        width: 440px;
+       
+    }
+    .content-data{
+        margin-right:90px ;
+        margin-left: 10px;
+       
+    }
+   .content{
+       display: flex;
+       flex-wrap: wrap;
+       padding-left: 95px;
+       
+   }
+}

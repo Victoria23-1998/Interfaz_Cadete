@@ -1,0 +1,106 @@
+
+
+
+.content-select{
+    margin-top: 30px;
+}
+
+.accordion-button{
+    border-radius: 15px;
+}
+.mat-expansion-panel{
+    margin-top: 15px;
+    width: 92%;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: var(--principal-color);
+    color:var(--text-color-parraf);
+}
+.mat-expansion-panel-header-title{
+    color:var(--text-color-parraf) !important;
+}
+.mat-expansion-panel-header-description, .mat-expansion-indicator::after{
+    color:var(--text-color-parraf) !important;
+}
+.mat-expansion-panel-header-description, .mat-expansion-indicator::after{
+    color:var(--text-color-parraf) !important;
+}
+select{
+    width: 200px;
+    height: 30px;
+    border-radius: 10px;
+   
+    margin-top: 38px;
+    margin-bottom: 20px;
+    border: none;
+    position: fixed;
+    top: 0;
+    z-index: 20;
+    left: 0; 
+    right: 0; 
+    margin-left: auto; 
+    margin-right: auto; 
+}
+option {
+    background-color: var(--principal-color);
+    color:var(--text-color-parraf);
+   
+}
+b{
+    color:var(--b);
+}
+
+section{
+
+    height: 100%;
+ 
+}
+.img-loader{
+    margin-top: 50px;
+    background-color: var(--fondo-loader);
+    position: absolute;
+    width: 100%;
+    height: 63%;
+    z-index: 20;
+    img{
+        width: 150px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+      
+    }
+}
+.content-History{
+    height: 80px;
+    width: 100%;
+    background-image: url("../../../../assets/img/MaskGroup.png");
+    position: fixed;
+    top: 0;
+    z-index: 20;
+   
+}
+.content-his{
+    padding-top: 100px;
+padding-bottom: 100px;
+}
+@media screen and (min-width:500px) and (max-width:800px){
+    .img-loader{
+        margin-top: 50px;
+        background-color: var(--fondo-loader);
+        position: absolute;
+        width: 100%;
+        height: 55%;
+    }
+    select{
+        width: 350px;
+    }
+}
+@media screen and (min-width:801px) and (max-width:1400px){
+    .img-loader{
+        
+        height: 40%;
+    }
+    select{
+        width: 400px;
+    }
+}

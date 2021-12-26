@@ -1,0 +1,18 @@
+<div class="content-gen" >
+    <div *ngIf="!this.show.showMenu()">
+        <img src="../../../../assets/img/login.png" alt="" width="30px">
+        <p>Inicio sesión</p>
+    </div>
+    <div class="content-history" [routerLink]="['/dasboard/history']" *ngIf="this.show.showMenu()">
+        <img src="../../../../assets/img/icons8-el-tiempo-de-entrega-90.png" alt="" width="30px" [routerLink]="['/dasboard/history']">
+        <p>Historial</p>
+    </div>
+    <div class="content-viaje" [routerLink]="['/dasboard/travel']" *ngIf="this.show.showMenu()">
+        <img src="../../../../assets/img/icons8-delivery-96.png" alt="" width="30px" [routerLink]="['/dasboard/travel']">
+        <p>Viajes</p>
+    </div>
+    <div class="content-logout" (click)="logout()" *ngIf="this.show.showMenu()">
+        <img src="../../../../assets/img/logout.png" alt="" width="30px" (click)="logout()">
+        <p (click)="logout()">Salir</p>
+    </div>
+</div>

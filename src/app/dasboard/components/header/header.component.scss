@@ -1,0 +1,51 @@
+.content-gen{
+    display: flex;
+    background-color: #013042;
+    position:fixed;
+    bottom: 0;
+    width: 100%;
+    justify-content: space-around;
+    height: auto;
+    align-items: center;
+
+
+    img{
+        margin-top: 7px;
+        margin-bottom: 2px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        cursor: pointer;
+    }
+    p{
+        color: whitesmoke;
+        text-align: center;
+        font-family: 'Open sans';
+        cursor: pointer;
+    
+    }
+}
+.content-history{
+ width: 100%;
+}
+.content-viaje{
+    width: 100%;
+}
+.content-logout{
+    width: 100%;
+}
+.content-viaje:focus{
+    background-color: #F0C028;
+}
+.content-history:focus{
+    background-color: #F0C028;
+}
+.content-logout:focus{
+    background-color: #F0C028;
+}
+@media screen and (min-width:801px) and (max-width:1400px){
+    .content-gen{
+        height: 50px;
+        padding-top: 8px;
+    }
+}

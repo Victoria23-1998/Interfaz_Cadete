@@ -1,0 +1,85 @@
+<section>
+    <div *ngIf="valueSelectTravel==='1'" class="content">
+
+        <div class="content-card animate__animated animate__fadeInLeft" *ngFor="let travel of availableTrips">
+            <div class="content-data">
+                <p><b>Dirección:</b>{{travel.travelEquipmentDTOs[travel.travelEquipmentDTOs.length-1].operator.address}}
+                </p>
+                <p><b>Hora:</b>{{travel.travelEquipmentDTOs[travel.travelEquipmentDTOs.length-1].operationDate |
+                    date:'h:mm'}}</p>
+                <p><b>Equipos:</b>{{travel.travelEquipmentDTOs[travel.travelEquipmentDTOs.length-1].equipment.mark}}</p>
+                <p><b>Estado viaje:</b>Disponible</p>
+            </div>
+
+            <div class="content-btn-img">
+                <img src="../../../../assets/img/icons8-delivery-64 (1).png" alt="">
+
+                <button mat-raised-button color="primary" type="button" class="button-soli"
+                    (click)="setViaje(travel.id,travel.lastStatusTravel,false)">SOLICITAR</button>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="valueSelectTravel==='2'">
+        <h2>Viajes Asignados</h2>
+        <div *ngIf="travelAccepted.length == 0" class="no-viajes-3">
+            <img src="../../../../assets/img/icons8-delivery-966.png" alt="">
+            <p>No hay viajes asignados</p>
+        </div>
+
+        <div *ngFor="let travel of travelAccepted" class="content-card2 animate__animated animate__zoomIn">
+            <div class="content-data2">
+                <p><b>Dirección:</b>{{travel.travelEquipmentDTOs[travel.travelEquipmentDTOs.length-1].operator.address}}
+                </p>
+                <p><b>Hora:</b>{{travel.travelEquipmentDTOs[travel.travelEquipmentDTOs.length-1].operationDate |
+                    date:'M/d/yy, h:mm a'}}</p>
+                <p><b>Equipos:</b>{{travel.travelEquipmentDTOs[travel.travelEquipmentDTOs.length-1].equipment.mark +
+                    travel.travelEquipmentDTOs[travel.travelEquipmentDTOs.length-1].equipment.model}}</p>
+                <p><b>Estado viaje:</b>{{statusMenssage(travel.lastStatusTravel)}}</p>
+                <div class="content-btn-emp">
+
+                    <button mat-raised-button color="primary" type="button"
+                        (click)="startTrip(travel.id,travel.lastStatusTravel)" class="empezar-viaje">Empezar
+                        Viaje</button>
+
+
+                    <button mat-raised-button color="primary" type="button"
+                        (click)="abandonar(travel.id,travel.lastStatusTravel)" class="abandonar">Abandonar</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="valueSelectTravel==='3'">
+        <h2>Viajes en Curso</h2>
+        <div *ngIf="viajesComenzados.length == 0" class="no-viajes-3">
+            <img src="../../../../assets/img/icons8-delivery-966.png" alt="">
+            <p>No hay viajes en curso</p>
+        </div>
+
+        <div class="content-card3 animate__animated animate__fadeInLeft" *ngFor="let travel of viajesComenzados">
+            <div class="content-data3">
+                <p>Nombre:{{travel.travelEquipmentDTOs[travel.travelEquipmentDTOs.length-1].operator.fullName}}</p>
+
+                <p>Dirección:{{travel.travelEquipmentDTOs[travel.travelEquipmentDTOs.length-1].operator.address}}
+                </p>
+                <p>Hora:{{travel.travelEquipmentDTOs[travel.travelEquipmentDTOs.length-1].operationDate | date:'M/d/yy,
+                    h:mm a'}}</p>
+                <p>Equipos:{{travel.travelEquipmentDTOs[travel.travelEquipmentDTOs.length-1].equipment.mark +
+                    travel.travelEquipmentDTOs[travel.travelEquipmentDTOs.length-1].equipment.model}}</p>
+                <p>Estado viaje:En curso</p>
+                <div class="content-btn2">
+
+                    <button mat-raised-button color="primary" type="button"
+                        (click)="finalizarViaje(travel.id,travel.lastStatusTravel)"
+                        class="finalizar-btn">Finalizar</button>
+                    <a href="http://maps.google.com/?q={{travel.travelEquipmentDTOs[travel.travelEquipmentDTOs.length-1].operator.address}}" target="_blank">
+                        <img src="../../../../assets/img/icons8-map-48.png" alt="" width="40px">
+                    </a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>

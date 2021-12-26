@@ -1,0 +1,74 @@
+
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use '@angular/material' as mat;
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$ti-logistics-hub-cadet-primary: mat.define-palette(mat.$indigo-palette);
+$ti-logistics-hub-cadet-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+
+// The warn palette is optional (defaults to red).
+$ti-logistics-hub-cadet-warn: mat.define-palette(mat.$red-palette);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+$ti-logistics-hub-cadet-theme: mat.define-light-theme((
+  color: (
+    primary: $ti-logistics-hub-cadet-primary,
+    accent: $ti-logistics-hub-cadet-accent,
+    warn: $ti-logistics-hub-cadet-warn,
+  )
+));
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include mat.all-component-themes($ti-logistics-hub-cadet-theme);
+
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+*{
+  padding: 0;
+  margin: 0;
+}
+.light-theme {
+  --background-color: rgb(255, 255, 255);
+  --principal-color: #CAE3DB;
+  --text-color-title:#013042;
+  --text-color-parraf:#000000;
+  --fondo-loader:rgb(255, 255, 255);
+  --webki-box:0 1px 8px 2px #D6D6D6;
+  --box-shadow:0 1px 8px 2px #D6D6D6;
+  --box-btn:-3px -3px 8px #fff,
+  3px 3px 5px rgb(94,104,121,0.7);
+  --b:#013042;
+}
+/*box-shadow: -3px -3px 8px #fff,
+    3px 3px 5px rgb(94,104,121,0.7);*/
+
+.dark-theme {
+  --background-color: #1a1a1a;
+  --principal-color: #393939;
+  --text-color-title:#F8F8F8;
+  --text-color-parraf:#F8F8F8;
+  --fondo-loader:#1a1a1a;
+  --webki-box: 1px 1px 20px 10px #2E2E2E;
+  --box-shadow:1px 1px 20px 10px #2E2E2E;
+  --box-btn:-3px -3px 8px rgb(65, 64, 64),
+  3px 3px 5px rgba(29, 29, 29, 0.7);
+  --b:#F0C028;
+}
+body{
+  background-color: var(--background-color);
+}
+//btn dark

@@ -1,0 +1,60 @@
+<section>
+  <div class="content-his">
+    <div class="content-History">
+
+      <select [(ngModel)]="opcionSelect" (change)="capturar()">
+        <option value="1">No confirmados</option>
+        <option value="2">Confirmados</option>
+      </select>
+    </div>
+    <div *ngIf="loader">
+      <div class="img-loader">
+        <img src="../../../../assets/img/Ripple-1s-200px (2).gif" alt="">
+      </div>
+    </div>
+    <div *ngIf="seleccion==='1'" class="content-sin">
+      <div *ngFor="let travel of viajesNoConfirmados" >
+
+        <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Cliente:{{travel.travelEquipmentDTOs[travel.travelEquipmentDTOs.length-1].operator.fullName}}
+            </mat-panel-title>
+            <mat-panel-description>
+              Estado del viaje: Sin confirmación
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <p><b>Fecha y hora:</b>{{travel.travelEquipmentDTOs[travel.travelEquipmentDTOs.length-1].operationDate |
+            date:'M/d/yy, h:mm a'}}</p>
+          <p>
+            <b>Dirección:</b>{{travel.travelEquipmentDTOs[travel.travelEquipmentDTOs.length-1].equipment.cliente.address}}
+          </p>
+          <p><b>Equipo:</b>{{travel.travelEquipmentDTOs[travel.travelEquipmentDTOs.length-1].equipment.mark}}</p>
+        </mat-expansion-panel>
+      </div>
+    </div>
+
+    <div *ngIf="seleccion==='2'" class="content-finalizado">
+      <div *ngFor="let travel of viajesFinalizados">
+
+        <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Fecha:{{travel.travelEquipmentDTOs[travel.travelEquipmentDTOs.length-1].operationDate | date:'M/d/yy'}}
+            </mat-panel-title>
+            <mat-panel-description>
+              Estado del viaje: Finalizado
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <p><b>Cliente:</b>{{travel.travelEquipmentDTOs[travel.travelEquipmentDTOs.length-1].operator.fullName}}</p>
+          <p><b>Fecha y hora:</b>{{travel.travelEquipmentDTOs[travel.travelEquipmentDTOs.length-1].operationDate |
+            date:'M/d/yy, h:mm a'}}</p>
+          <p>
+            <b>Dirección:</b>{{travel.travelEquipmentDTOs[travel.travelEquipmentDTOs.length-1].equipment.cliente.address}}
+          </p>
+          <p><b>Equipo:</b>{{travel.travelEquipmentDTOs[travel.travelEquipmentDTOs.length-1].equipment.mark}}</p>
+        </mat-expansion-panel>
+      </div>
+    </div>
+  </div>
+</section>
