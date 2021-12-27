@@ -1,21 +1,22 @@
 <section class="content-aceptados">
     
     <div class="content-select">
-        <select [(ngModel)]="opcionSeleccionada" (change)="capturar()">
-            <option value="1">Viajes Disponibles</option>
-            <option value="2" >Viajes Asignados</option>
-            <option value="3" >Viajes en curso</option>
-           
-        </select>
         
-        <div *ngIf="loader" >
-            <div class="img-loader2">
+           
+            <mat-select [(value)]="selected"  (selectionChange)="capturar($event)">
+              <mat-option *ngFor="let name of selectViajes" value="{{name}}">{{name}}</mat-option>
+             
+             
+            </mat-select>
+        
+    </div>   
+    <div *ngIf="loader" >
+        <div class="img-loader2">
             <img src="../../../../assets/img/Ripple-1s-200px (2).gif" alt="">
-        </div>  
         </div>
-       
-    </div>
-    <div class="content-viajes">
+    </div>  
+        
+   <div class="content-viajes">
         <app-trip [availableTrips]=viajesDisponibles [valueSelectTravel]=opcionSeleccionada [travelAccepted]=acceptedTravel 
     [viajesComenzados]=viajesEmpezados></app-trip>
   </div>

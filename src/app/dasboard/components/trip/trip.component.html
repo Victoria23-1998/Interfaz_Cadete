@@ -1,5 +1,5 @@
 <section>
-    <div *ngIf="valueSelectTravel==='1'" class="content">
+    <div *ngIf="valueSelectTravel==='Viajes Disponibles'" class="content">
 
         <div class="content-card animate__animated animate__fadeInLeft" *ngFor="let travel of availableTrips">
             <div class="content-data">
@@ -19,7 +19,7 @@
             </div>
         </div>
     </div>
-    <div *ngIf="valueSelectTravel==='2'">
+    <div *ngIf="valueSelectTravel==='Viajes Asignados'">
         <h2>Viajes Asignados</h2>
         <div *ngIf="travelAccepted.length == 0" class="no-viajes-3">
             <img src="../../../../assets/img/icons8-delivery-966.png" alt="">
@@ -50,7 +50,7 @@
         </div>
     </div>
 
-    <div *ngIf="valueSelectTravel==='3'">
+    <div *ngIf="valueSelectTravel==='Viajes en curso'">
         <h2>Viajes en Curso</h2>
         <div *ngIf="viajesComenzados.length == 0" class="no-viajes-3">
             <img src="../../../../assets/img/icons8-delivery-966.png" alt="">

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TravelService } from '../../service/travel.service';
 import { TravelResponse } from '../../interface/travelResponse';
 import { User } from '../../interface/local';
+import { MatSelectChange } from '@angular/material/select';
 
 @Component({
   selector: 'app-travel',
@@ -12,16 +13,17 @@ export class TravelComponent implements OnInit {
   
   constructor(private travelService:TravelService) { }
 
-  mensaje:string=''
-  viajesDisponibles:TravelResponse[]=[]
-  idCadete:number=0
-  local:User={} as User
-  loader:boolean=true
-  acceptedTravel:TravelResponse[]=[]
-  opcionSeleccionada: string  = '1';
+  mensaje:string='';
+  viajesDisponibles:TravelResponse[]=[];
+  idCadete:number=0;
+  local:User={} as User;
+  loader:boolean=true;
+  acceptedTravel:TravelResponse[]=[];
+  opcionSeleccionada: string  = 'Viajes Disponibles';
   seleccion: string        = '';
-  viajesEmpezados:TravelResponse[]=[]
-  allTravels:TravelResponse[]=[]
+  viajesEmpezados:TravelResponse[]=[];
+  allTravels:TravelResponse[]=[];
+  selected = 'Viajes Disponibles';
 
   ngOnInit(): void {
     this.getTravels(1,'disponibles')
@@ -37,7 +39,7 @@ export class TravelComponent implements OnInit {
   getTravels(status: number, tipoDeViaje: string) {
     this.travelService.getTravels(status).subscribe(data => {
 
-      console.log(data)
+      
       data.forEach(async element => {
         this.allTravels.push(element)
 
@@ -67,23 +69,30 @@ export class TravelComponent implements OnInit {
   }
 
  // Código del select
+ selectViajes:string[]=['Viajes Disponibles','Viajes Asignados','Viajes en curso']
 
-  capturar() {
+  capturar(event:MatSelectChange) {
   
-   this.seleccion = this.opcionSeleccionada;
-   if (this.seleccion == '2') {
+ let selectedData={
+   value:event.value,
+   text:event.source.triggerValue
+ }
+
+ this.opcionSeleccionada=selectedData.text
+console.log(this.opcionSeleccionada)
+  if (selectedData.text === 'Viajes Asignados') {
 
      this.loader = true
      this.viajesDisponibles = []
      this.getTravels(2,'asignados')
      this.getTravels(6,'asignados')
 
-   } else if (this.seleccion === '1') {
+   } else if (selectedData.text === 'Viajes Disponibles') {
      this.loader = true
      this.acceptedTravel = []
      this.getTravels(1,'disponibles')
      this.getTravels(5,'disponibles')
-   } else if (this.seleccion === '3') {
+   } else if (selectedData.text === 'Viajes en curso') {
      this.loader = true
      this.getTravels(3,'en curso')
      this.getTravels(7,'en curso')
@@ -91,74 +100,6 @@ export class TravelComponent implements OnInit {
    }
 
 }
-
-//Traer los viajes en curso estado 3
- /*viajeEnCurso1(){
-
-     this.travelService.viajesCurso1().subscribe(data => {
-
-     let response = data.filter(el => el.travelEquipmentDTOs[el.travelEquipmentDTOs.length - 1].cadete.id == this.idCadete)
-     
-     response.forEach(travel => {
-
-       let index = this.viajesEmpezados.findIndex(elm => elm.id == travel.id);
-       if (index === -1) {
-         this.viajesEmpezados.push(travel)
-       }
-     })
-
-   }, (error) => {
-     console.log(error.error)
-   })
- }*/
-//Traer los viajes en curso estado 7
- 
-
-  // traer viajes aceptados por el cadete estado 2
- 
-  /*TravelAccepted1(){
-      this.travelService.getTravelAccepted1().subscribe(data => {
-      let response = data.filter(el => el.travelEquipmentDTOs[el.travelEquipmentDTOs.length - 1].cadete.id == this.idCadete)
-
-      response.forEach(el => {
-        let index = this.acceptedTravel.findIndex(elm => elm.id == el.id);
-        if (index === -1) {
-          this.acceptedTravel.push(el)
-        }
-
-      })
-
-    }, (error) => {
-      console.log(error.error)
-    });
-  }*/
-
-  
-
-   // traer viajes aceptados por el cadete estado 6
- /* TravelAccepted2(){
-    this.travelService.getTravelAccepted2().subscribe(data => {
-
-      let response = data.filter(el => el.travelEquipmentDTOs[el.travelEquipmentDTOs.length - 1].cadete.id == this.idCadete)
-      response.forEach(el => {
-        let index = this.acceptedTravel.findIndex(elm => elm.id == el.id);
-        if (index === -1) {
-          this.acceptedTravel.push(el)
-        }
-
-      })
-
-      this.loader = false
-      //ordenar array por fecha
-      this.ordenarArray(this.acceptedTravel)
-    
-   
-    }, (error) => {
-      console.log(error.error)
-    });
-
-   }*/
- 
 
   //ordenar array por fecha
 
