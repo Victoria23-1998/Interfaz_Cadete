@@ -79,7 +79,7 @@ export class TravelComponent implements OnInit {
  }
 
  this.opcionSeleccionada=selectedData.text
-console.log(this.opcionSeleccionada)
+
   if (selectedData.text === 'Viajes Asignados') {
 
      this.loader = true

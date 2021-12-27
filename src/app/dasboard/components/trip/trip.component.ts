@@ -1,10 +1,11 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, SimpleChanges, OnChanges } from '@angular/core';
 import { Input } from '@angular/core';
 import { TravelResponse } from '../../interface/travelResponse';
 import { User } from '../../interface/local';
 import { TravelService } from '../../service/travel.service';
-
 import Swal from 'sweetalert2'
+
+
 
 
 @Component({
@@ -16,7 +17,7 @@ export class TripComponent implements OnInit {
 
   //variables
   travelId:number = 0
-  viajesSolicitados:TravelResponse[]=[]
+  viajesSolicitado:TravelResponse[]=[]
   idCadet:number=0
   toggle:boolean=false
   local:User={
@@ -29,7 +30,7 @@ export class TripComponent implements OnInit {
   idUserLoged:number=0
   isReasigned:boolean=false
   statusTravel:number=0
-  error:string=''
+  allTravels:TravelResponse[]=[]
 
 
   @Input() availableTrips:TravelResponse[]=[]
@@ -42,20 +43,30 @@ export class TripComponent implements OnInit {
   ngOnInit(): void {
    this.local = JSON.parse(localStorage.getItem('Usuario') ||'')
    this.idCadet = this.local.id
+   
+   
   }
+  ngAfterContentChecked(){
+   
+    this.llenarArray()
   
+}
+ 
+   llenarArray(){
+    
+    this.allTravels=([] as TravelResponse[]).concat( this.availableTrips,  this.travelAccepted,  this.viajesComenzados)
+    
+  }
   setViaje(id:number,status:number,ressigned:boolean){
 
     this.travelId = id
 
-    //viajes solicitados es el body para la url de post
-    this.viajesSolicitados = this.availableTrips.filter(travel => travel.id === this.travelId);
+    //viajes solicitado es el body para la url de post
+    this.viajesSolicitado = this.availableTrips.filter(travel => travel.id === this.travelId);
 
-    //obtener id del viaje para luego pasarlo a la url
-    this.viajesSolicitados.forEach(travel => {
-
+    //obtener id del cliente para luego pasarlo a la url
+    this.viajesSolicitado.forEach(travel => {
       this.idUserLoged = travel.travelEquipmentDTOs[0].operator.id;
-
     })
 
     //viaje no cancelado
@@ -71,9 +82,8 @@ export class TripComponent implements OnInit {
       this.statusTravel = 6
 
     }
-
-
-    this.travelService.TravelAccepted(this.idCadet.toString(), this.travelId.toString(), this.idUserLoged.toString(), this.isReasigned, this.statusTravel.toString(), this.viajesSolicitados).subscribe((data: TravelResponse) => {
+    //(idTravel.toString(),this.isUser.toString(),travelStatus.toString(), this.viajeRenunciar)
+   this.travelService.TravelAccepted(this.idCadet.toString(), this.travelId.toString(), this.idUserLoged.toString(), this.isReasigned, this.statusTravel.toString(), this.viajesSolicitado).subscribe((data: TravelResponse) => {
 
       console.log(data)
       Swal.fire({
@@ -102,11 +112,124 @@ export class TripComponent implements OnInit {
   
   
   }
- 
-  //condicional para el html de viajes aceptados
- 
-   trips:string= 'No tienes viajes en curso'
 
+   gestionViaje(tipoGestion:string,isReasigned:boolean,idTravel:number,statusTravel:number,titleAlert:string){
+   
+    this.viajesSolicitado = this.allTravels.filter(travel => travel.id === idTravel);
+    
+    //obtener id del cliente para luego pasarlo a la url
+    this.viajesSolicitado.forEach(travel => {
+      this.idUserLoged = travel.travelEquipmentDTOs[0].operator.id;
+    })
+
+    if(tipoGestion === "asignar"){
+      // ver si el status será entrega asignada o retiro asignado
+        if (statusTravel === 1) {
+        //cambia de solicitud retiro a retiro asignado
+        this.statusTravel = 2
+      } else if (statusTravel === 5) {
+        //cambia de reparado a entrega asignada
+        this.statusTravel = 6
+      }
+      console.log(this.statusTravel)
+    }else if(tipoGestion ==="comenzar"){
+      if(statusTravel === 2 ){
+        this.statusTravel = 3
+      }else if(statusTravel === 6){
+        this.statusTravel= 7
+      }
+    }else if(tipoGestion ==="finalizar"){
+      if (statusTravel === 7) {
+        this.statusTravel = 8
+      } else if (statusTravel=== 3) {
+        this.statusTravel = 4
+      }
+    }
+
+    this.viajeAmodificar(this.idCadet,idTravel,this.idUserLoged,isReasigned,this.statusTravel,this.viajesSolicitado,titleAlert,tipoGestion)
+
+  }
+
+ //asignar, comenzar, finalizar luego ver como agregar el abandonar
+  viajeAmodificar(idCadete:number,travelId:number,userLogued:number,isReasigned:boolean,statusTravel:number,viajeSolcitado:TravelResponse[],titleAlert:string,tipoGestion:string){
+    this.travelService.TravelAccepted(idCadete.toString(), travelId.toString(), userLogued.toString(), isReasigned, statusTravel.toString(), viajeSolcitado).subscribe((data: TravelResponse) => {
+
+      console.log(data)
+      this.tipoDeAlerta(tipoGestion,titleAlert,travelId)
+
+      if(tipoGestion ==='asignar' ){
+        this.ActualizarArray(tipoGestion,1,travelId)
+        this.ActualizarArray(tipoGestion,5,travelId)
+      }else if(tipoGestion ==='comenzar' || tipoGestion ==='abandonar'){
+        this.ActualizarArray(tipoGestion,2,travelId)
+        this.ActualizarArray(tipoGestion,6,travelId)
+      }else if(tipoGestion ==='finalizar'){
+        this.ActualizarArray(tipoGestion,3,travelId)
+        this.ActualizarArray(tipoGestion,7,travelId)
+      }
+      
+    }, (error) => {
+      if(error.status === 403){
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: error.error,
+
+        })
+      }
+      
+    })
+  }
+  ActualizarArray(tipoGestion:string,statusTravel:number,idTravel:number){
+
+          if(tipoGestion ==='asignar'){
+          
+          this.availableTrips=[]
+          this.getTravels(tipoGestion,statusTravel)
+          
+          }else if(tipoGestion ==='comenzar'){
+            let newArray:TravelResponse[]= this.travelAccepted.filter(el => el.id !== idTravel);
+            return this.travelAccepted = newArray
+           }else if(tipoGestion ==='finalizar'){
+            
+            let newArray:TravelResponse[]= this.viajesComenzados.filter(el => el.id !== idTravel);
+            return this.travelAccepted = newArray
+           }
+        
+  }
+
+  getTravels(tipoGestion:string,statusTravel:number,){
+    this.travelService.getTravels(statusTravel).subscribe(data => {
+      data.forEach(async (travel)=>{
+        if(tipoGestion ==='asignar'){
+        
+          this.availableTrips.push(travel)
+
+         }else if(tipoGestion ==='comenzar'){
+          
+           this.travelAccepted.push(travel)
+         
+         }else if(tipoGestion ==='finalizar'){
+           this.viajesComenzados.push(travel)
+         }
+      })
+    })
+  }
+
+  tipoDeAlerta(tipoGestion:string,titleAlert:string,idTravel:number): any {
+    
+    if(tipoGestion === 'asignar' || tipoGestion === 'Finalizar'){
+      return Swal.fire({
+        position: 'center-start',
+        icon: 'success',
+        title: titleAlert,
+        showConfirmButton: false,
+        timer: 1400
+      })
+    }else if(tipoGestion === 'comenzar'){
+      return this.start(idTravel)
+    }
+  }
    //estado del viaje para mostrarlo en la card de asignados
    statusMenssage(status:number){
      let result: string = ''
@@ -158,7 +281,7 @@ export class TripComponent implements OnInit {
     
     })
    
-    this.travelService.Travelwaived(idTravel.toString(),this.isUser.toString(),travelStatus.toString(), this.viajeRenunciar).subscribe(data =>{
+    this.travelService.Travelwaived(this.idCadet.toString(),idTravel.toString(),this.isUser.toString(),travelStatus.toString(), this.viajeRenunciar).subscribe(data =>{
       console.log(data)
     },(error =>{
       console.log(error.error)
@@ -182,7 +305,7 @@ export class TripComponent implements OnInit {
    statusViaje:number=0
    viajesCurso:TravelResponse[]=[]
 
-   startTrip(idTravel:number,status:number){
+  startTrip(idTravel:number,status:number){
     this.viajeComenzar = this.travelAccepted.filter(travel => travel.id === idTravel);
     this.viajeComenzar.forEach(travel =>{
       this.User= travel.travelEquipmentDTOs[0].operator.id;
@@ -220,7 +343,7 @@ export class TripComponent implements OnInit {
   nombre:string='';
   apellido:string=''
   estadoViaje:string=''
-
+  //comenzar
   start(idTravel:number){
 
     let viajeIniciado:TravelResponse[]= this.travelAccepted.filter(el => el.id == idTravel);

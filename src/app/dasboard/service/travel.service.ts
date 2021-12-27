@@ -10,7 +10,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class TravelService {
 
   constructor(private http:HttpClient) { }
-  
+
   getTravels(statusTravel:number):Observable<TravelResponse[]>{
     return this.http.get<TravelResponse[]>(`/api/Travel/1/${statusTravel}`)
   }
@@ -31,8 +31,8 @@ export class TravelService {
   }
 
  //para viajes renunciados
- Travelwaived(travelId:string,idUser:string,status:string,body:TravelResponse[]):Observable<TravelResponse>{
-  return this.http.post<TravelResponse>(`/api/Travel?travelId=${travelId}&statusTravel=${status}&userOperation=${idUser}&cadeteId=0&isReasigned=true`,body)
+ Travelwaived(idCadet:string,travelId:string,idUser:string,status:string,body:TravelResponse[]):Observable<TravelResponse>{
+  return this.http.post<TravelResponse>(`/api/Travel?travelId=${travelId}&statusTravel=${status}&userOperation=${idUser}&cadeteId=${idCadet}&isReasigned=true`,body)
  }
   handlerError(error:HttpErrorResponse){
    return throwError(error.status || "Server error")

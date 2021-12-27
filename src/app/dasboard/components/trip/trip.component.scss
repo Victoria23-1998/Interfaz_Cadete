@@ -114,31 +114,27 @@ justify-content: center;
 .empezar-viaje{
     border-radius: 15px;
     background-color: #F0C028;
-    box-shadow: -3px -3px 8px #fff,
-    3px 3px 5px rgb(94,104,121,0.7);
+    box-shadow: var(--box-btn);
     margin-right: 20px;
     margin-top: 20px;
 }
 .abandonar{
     border-radius: 15px;
     background-color: #7C9D94;
-    box-shadow: -3px -3px 8px #fff,
-    3px 3px 5px rgb(94,104,121,0.7);
+    box-shadow: var(--box-btn);
     margin-top: 20px;
 }
 .finalizar-btn{
     border-radius: 15px;
     background-color: #F0C028;
-    box-shadow: -3px -3px 8px #fff,
-    3px 3px 5px rgb(94,104,121,0.7);
+    box-shadow: var(--box-btn);
     margin-right: 20px;
     margin-top: 20px;
 }
 .mapa-btn{
     border-radius: 15px;
     background-color: #7C9D94;
-    box-shadow: -3px -3px 8px #fff,
-    3px 3px 5px rgb(94,104,121,0.7);
+    box-shadow: var(--box-btn);
     margin-top: 20px;
 }
 h2{

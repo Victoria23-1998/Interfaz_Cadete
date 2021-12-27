@@ -13,9 +13,9 @@
 
             <div class="content-btn-img">
                 <img src="../../../../assets/img/icons8-delivery-64 (1).png" alt="">
-
+                
                 <button mat-raised-button color="primary" type="button" class="button-soli"
-                    (click)="setViaje(travel.id,travel.lastStatusTravel,false)">SOLICITAR</button>
+                    (click)="gestionViaje('asignar',false,travel.id,travel.lastStatusTravel,'Viaje asignado con éxito')">SOLICITAR</button>
             </div>
         </div>
     </div>
@@ -38,7 +38,7 @@
                 <div class="content-btn-emp">
 
                     <button mat-raised-button color="primary" type="button"
-                        (click)="startTrip(travel.id,travel.lastStatusTravel)" class="empezar-viaje">Empezar
+                        (click)="gestionViaje('comenzar',false,travel.id,travel.lastStatusTravel,'Buen viaje')" class="empezar-viaje">Empezar
                         Viaje</button>
 
 
@@ -71,7 +71,7 @@
                 <div class="content-btn2">
 
                     <button mat-raised-button color="primary" type="button"
-                        (click)="finalizarViaje(travel.id,travel.lastStatusTravel)"
+                        (click)="gestionViaje('finalizar',false,travel.id,travel.lastStatusTravel,'Viaje finalizado con éxito')"
                         class="finalizar-btn">Finalizar</button>
                     <a href="http://maps.google.com/?q={{travel.travelEquipmentDTOs[travel.travelEquipmentDTOs.length-1].operator.address}}" target="_blank">
                         <img src="../../../../assets/img/icons8-map-48.png" alt="" width="40px">
